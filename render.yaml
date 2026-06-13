@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: movie-ticket-booking
+    runtime: docker
+    dockerContext: ERP-main/movieticket
+    dockerfilePath: ERP-main/movieticket/Dockerfile
+    plan: free
