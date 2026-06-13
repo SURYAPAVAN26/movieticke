@@ -1,0 +1,33 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::body})}">
+<head><title th:text="${movie.title} + ' - CineSphere'"></title></head>
+<body>
+  <div class="movie-detail-container">
+    <div class="poster-large-container">
+      <img th:src="${movie.posterUrl}" class="poster-large" alt="Large Movie Poster" />
+    </div>
+    <div class="detail-info">
+      <h2 th:text="${movie.title}">Title</h2>
+      <span class="genre-pill" th:text="${movie.genre}">Genre</span>
+      <p th:text="${movie.description}"></p>
+      
+      <h3>Available Shows</h3>
+      <div th:if="${#lists.isEmpty(shows)}" style="padding: 20px; text-align: center; color: var(--text-muted);">
+        No shows currently scheduled for this movie. Check back soon!
+      </div>
+      <ul class="shows-list" th:unless="${#lists.isEmpty(shows)}">
+        <li th:each="s: ${shows}">
+          <div class="show-item-card">
+            <span class="show-time" th:text="${#temporals.format(s.showTime, 'dd MMM yyyy HH:mm')}">Time</span>
+            <span class="show-theater" th:text="${s.theater.name} + ' (' + ${s.theater.location} + ')'">Theater</span>
+            <div class="show-price-row">
+              <span class="show-price" th:text="'₹' + ${s.price}">₹200</span>
+              <a th:href="@{/movies/show/{id}/seats(id=${s.id})}" class="btn" style="padding: 8px 16px; font-size: 13px;">Select Seats</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

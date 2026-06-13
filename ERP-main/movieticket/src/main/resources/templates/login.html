@@ -1,0 +1,25 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::body})}">
+<head><title>Login - CineSphere</title></head>
+<body>
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Welcome Back</h2>
+      
+      <!-- Error banner if login failed -->
+      <div th:if="${param.error}" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); padding: 12px; border-radius: var(--border-radius-sm); color: var(--danger); font-size: 14px; margin-bottom: 20px; text-align: center;">
+        Invalid email or password. Please try again.
+      </div>
+      
+      <form method="post" th:action="@{/login}">
+        <label>Email Address</label>
+        <input name="username" type="email" placeholder="name@example.com" required/>
+        <label>Password</label>
+        <input name="password" type="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required/>
+        <button type="submit" class="btn">Login</button>
+      </form>
+      <p>Don't have an account? <a th:href="@{/signup}">Sign up now</a></p>
+    </div>
+  </div>
+</body>
+</html>

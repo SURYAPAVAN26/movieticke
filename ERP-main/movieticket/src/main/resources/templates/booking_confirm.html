@@ -1,0 +1,51 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::body})}">
+<head><title>Booking Confirmed - CineSphere</title></head>
+<body>
+  <div style="text-align: center; margin-bottom: 30px;">
+    <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 8px;">Enjoy Your Show!</h2>
+    <p style="color: var(--text-secondary);">Your ticket has been confirmed. Present the digital voucher at the counter.</p>
+  </div>
+
+  <div class="ticket-card">
+    <div class="ticket-header">
+      <h2>Confirmed</h2>
+      <span class="ticket-ref" th:text="'REF: ' + ${booking.bookingRef}">REF: CS8765</span>
+    </div>
+    
+    <div class="ticket-body">
+      <div class="ticket-row">
+        <span class="ticket-row-title">Movie</span>
+        <span class="ticket-row-value" th:text="${booking.show.movie.title}">Movie Title</span>
+      </div>
+      <div class="ticket-row">
+        <span class="ticket-row-title">Theater</span>
+        <span class="ticket-row-value" th:text="${booking.show.theater.name} + ' - ' + ${booking.show.theater.location}">Galaxy Cinema - MG Road</span>
+      </div>
+      <div class="ticket-row">
+        <span class="ticket-row-title">Showtime</span>
+        <span class="ticket-row-value" th:text="${#temporals.format(booking.show.showTime,'dd MMM yyyy HH:mm')}">20 Oct 2025 18:00</span>
+      </div>
+      <div class="ticket-row">
+        <span class="ticket-row-title">Seats</span>
+        <span class="ticket-row-value">
+          <span th:each="seat, iterStat : ${booking.seats}" th:text="${seat.seatNumber} + (${iterStat.last} ? '' : ', ')">A1, A2</span>
+        </span>
+      </div>
+      <div class="ticket-row">
+        <span class="ticket-row-title">Total Paid</span>
+        <span class="ticket-row-value" style="color: var(--success); font-size: 18px;" th:text="'₹' + ${booking.totalPrice}">₹400.00</span>
+      </div>
+      
+      <div class="ticket-barcode">
+        <div class="barcode-stripes"></div>
+        <span class="barcode-text" th:text="${booking.bookingRef}">CS8765</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 30px;">
+    <a th:href="@{/bookings}" class="btn secondary">View My Bookings</a>
+  </div>
+</body>
+</html>

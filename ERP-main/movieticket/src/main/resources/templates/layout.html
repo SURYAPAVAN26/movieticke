@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html th:fragment="layout(content)" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineSphere - Premium Movie Tickets</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a th:href="@{/}" class="logo">CineSphere</a>
+            <div class="nav-right">
+                <a th:href="@{/}">Movies</a>
+                <span sec:authorize="isAuthenticated()">
+                    <a th:href="@{/bookings}">My Bookings</a>
+                    <a th:href="@{/admin/movies}" sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ADMIN')">Admin</a>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn danger" style="padding: 6px 14px; font-size: 13px; box-shadow: none;">Logout</button>
+                    </form>
+                </span>
+                <span sec:authorize="!isAuthenticated()" style="display: flex; align-items: center; gap: 16px;">
+                    <a th:href="@{/login}">Login</a>
+                    <a th:href="@{/signup}" class="btn" style="padding: 8px 16px; font-size: 13px; box-shadow: none;">Sign Up</a>
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container" th:replace="${content}">
+    </main>
+
+    <footer>
+        <p>&copy; 2026 CineSphere Ticket Booking Platform. All rights reserved.</p>
+        <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Designed for cinematic excellence.</p>
+    </footer>
+</body>
+</html>

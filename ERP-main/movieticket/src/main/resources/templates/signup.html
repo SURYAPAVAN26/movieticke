@@ -1,0 +1,19 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::body})}">
+<head><title>Create Account - CineSphere</title></head>
+<body>
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Create Account</h2>
+      <form method="post" th:action="@{/signup}" th:object="${user}">
+        <label>Email Address</label>
+        <input type="email" th:field="*{username}" placeholder="name@example.com" required/>
+        <label>Password</label>
+        <input type="password" th:field="*{password}" placeholder="Choose a strong password" required/>
+        <button type="submit" class="btn">Register</button>
+      </form>
+      <p>Already have an account? <a th:href="@{/login}">Login instead</a></p>
+    </div>
+  </div>
+</body>
+</html>

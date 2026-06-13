@@ -1,0 +1,53 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::body})}">
+<head><title>My Bookings - CineSphere</title></head>
+<body>
+  <div style="margin-bottom: 30px;">
+    <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 8px;">My Bookings</h2>
+    <p style="color: var(--text-secondary);">Manage your tickets, view barcodes, or cancel scheduled shows.</p>
+  </div>
+
+  <div th:if="${#lists.isEmpty(bookings)}" style="background: var(--bg-secondary); border: 1px solid var(--glass-border); padding: 40px; text-align: center; border-radius: var(--border-radius-md); box-shadow: var(--glass-glow);">
+    <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 20px;">You haven't booked any movie tickets yet.</p>
+    <a th:href="@{/}" class="btn">Explore Movies</a>
+  </div>
+
+  <div class="table-container" th:unless="${#lists.isEmpty(bookings)}">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Reference</th>
+          <th>Movie Title</th>
+          <th>Showtime</th>
+          <th>Reserved Seats</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th style="text-align: right;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="b: ${bookings}">
+          <td style="font-family: monospace; font-weight: bold; letter-spacing: 0.5px;" th:text="${b.bookingRef}">CS8765</td>
+          <td th:text="${b.show.movie.title}" style="font-weight: 600;">Movie Title</td>
+          <td th:text="${#temporals.format(b.show.showTime,'dd MMM yyyy HH:mm')}">Time</td>
+          <td>
+            <span th:each="seat, iterStat : ${b.seats}" th:text="${seat.seatNumber} + (${iterStat.last} ? '' : ', ')">A1, A2</span>
+          </td>
+          <td style="color: var(--success); font-weight: 700;" th:text="'₹' + ${b.totalPrice}">₹400</td>
+          <td>
+            <span class="badge-status" 
+                  th:classappend="${b.status=='BOOKED'} ? 'booked' : 'cancelled'"
+                  th:text="${b.status}">BOOKED</span>
+          </td>
+          <td style="text-align: right;">
+            <form th:action="@{/bookings/cancel}" method="post" th:if="${b.status=='BOOKED'}" style="display: inline-block;">
+              <input type="hidden" name="bookingId" th:value="${b.id}" />
+              <button type="submit" class="btn danger" style="padding: 6px 14px; font-size: 13px; box-shadow: none;">Cancel Booking</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

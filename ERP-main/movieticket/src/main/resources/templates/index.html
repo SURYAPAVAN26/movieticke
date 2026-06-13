@@ -1,0 +1,29 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::body})}">
+<head><title>CineSphere - Premium Movie Tickets</title></head>
+<body>
+  <div class="hero">
+    <h1>Experience Movies in Style</h1>
+    <p>Discover blockbuster releases, reserve prime seats virtual layouts, and book your tickets in seconds.</p>
+  </div>
+
+  <section class="movies-grid">
+    <div th:each="m: ${movies}" class="movie-card">
+      <div class="poster-container">
+        <span class="genre-badge" th:text="${m.genre}">Genre</span>
+        <img th:src="${m.posterUrl}" alt="movie poster" class="poster"/>
+      </div>
+      <div class="movie-info">
+        <h3 th:text="${m.title}">Movie Title</h3>
+        <div class="movie-meta">
+          <span th:text="${m.duration} + ' mins'">120 mins</span>
+          <span>&bull;</span>
+          <span>English</span>
+        </div>
+        <p th:text="${m.description}">Movie short description goes here...</p>
+        <a th:href="@{/movies/{id}(id=${m.id})}" class="btn" style="margin-top: auto;">View Shows</a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
