@@ -6,6 +6,7 @@
 
 GitHub: https://github.com/SURYAPAVAN26  
 LinkedIn: https://linkedin.com/in/kodipathruni-surya-pavan-175850317
+Live:https://movieticke.onrender.com
 
 ⭐ If you find this project useful, give it a star!
 
